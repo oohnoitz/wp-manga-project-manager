@@ -1,0 +1,172 @@
+/* Clear */
+.wpmanga-clear { clear: both; } br.wpmanga_clear { margin: 0px; padding: 0px; }
+
+/* Latest Release List */
+ul.latest-release-list a { color: #525A61; }
+ul.latest-release-list a:hover { color: #1A8FCC; }
+ul.latest-release-list img { float: left; margin-right: 15px; }
+ul.latest-release-list p { font-size: 11px; padding: 0px; }
+ul.latest-release-list li {
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+	border-bottom: 1px dotted #DADEE0;
+	background: none;
+	overflow: hidden;
+}
+.latest-release-date { display: block; font-size: 10px; color: #919598; font-style: italic; text-transform: uppercase; }
+.project-icon-thumbnail {
+	border: 1px solid #CED2D7;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+/* Release Download Bar */
+#release-download-wrapper {
+	margin-top: 5px;
+	padding: 0px;
+	line-height: 34px;
+	cursor: pointer;
+	clear: both;
+}
+#release-download-wrapper .release-download-button {
+	float: left;
+	display: block;
+	margin-right: 10px;
+	padding: 0 20px 0 44px;
+	line-height: 34px;
+	font-size: 11px;
+	text-align: center;
+	text-transform: uppercase;
+	color: #FFF;
+	border: 1px solid #003453;
+	background: transparent url('../images/download-release-button.png') no-repeat left top;
+	cursor: pointer;
+}
+#release-download-wrapper .release-download-icons a img { padding: 1px; }
+#release-download-wrapper .release-download-icons {
+	visibility: hidden;
+	padding: 0 0 0 5px;
+}
+#release-download-wrapper .release-download-icons li {
+	display: inline;
+	margin-right: 5px;
+	line-height: 34px;
+	background: none;
+}
+#release-download-wrapper-style2 { display: inline-block; width: 100%; }
+#release-download-wrapper-style2 .release-download-style2-title { float: left; }
+#release-download-wrapper-style2 .release-download-style2-icons { float: right; padding-top: 4px; }
+
+/* Projects Page */
+#projects-wrapper { width: 100%; }
+#projects-wrapper .item {
+	float: left;
+	margin: 0 0 5px 5px;
+}
+#projects-wrapper .item img {
+	opacity: 0.7;
+	border: 1px solid #CED2D7;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+#projects-tooltip {
+	display: none;
+	position: fixed;
+	left: 25px;
+	bottom: 25px;
+	z-index: 9999 !important;
+	padding: 5px;
+	border: 1px solid #CED2D7;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	font-size: 15px;
+	text-align: center;
+	color: #FFF;
+	background: rgba(0, 0, 0, 0.7);
+}
+
+/* Project Details */
+#project-container { padding-top: 5px; }
+#project-container img {
+	opacity: 0.7;
+	float: left;
+	position: static;
+	margin-right: 10px;
+	border: 1px solid #CED2D7;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+#project-details {
+	display: table;
+}
+#project-details .header {
+	display: inline-block;
+	font-size: 13px;
+	font-weight: bold;
+}
+#project-details .description {
+	display: block;
+	padding-left: 5px;
+}
+
+/* Release Layout */
+#release-container { padding-top: 10px; }
+#release-container .list {
+	float: left;
+	width: 100%;
+	margin: 10px auto 10px;
+	background-color: #CECECE;
+}
+#release-container .volume {
+	padding: 1px !important;
+	border: 1px solid #EEE;
+	border-width: 1px;
+}
+#release-container .title {
+	float: left;
+	padding-left: 5px;
+}
+#release-container .downloads {
+	float: right;
+	padding-right: 5px;
+	text-align: right;
+}
+#release-container .footer {
+	clear: both;
+	padding: 3px 0 3px 5px;
+	font-style: italic;
+	font-weight: bold;
+	background-color: #AAA;
+}
+
+/* Overlay */
+.download-overlay {
+	display: none;
+	width: 600px;
+	z-index: 9999 !important;
+	padding: 35px;
+	font-size: 13px;
+	font-weight: bold;
+	text-align: center;
+	color: #525A61;
+	background-color: #FAFAFA;
+	border: 1px solid #525A61;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+input.xdcc {
+	width: 450px;
+	margin: 5px;
+	padding: 5px;
+	font-family: "Segoe UI";
+	font-size: 23px;
+	font-weight: 100;
+	text-align: center;
+	background-color: rgb(255, 255, 255);
+	border: 2px rgb(0, 0, 0) solid;
+}
