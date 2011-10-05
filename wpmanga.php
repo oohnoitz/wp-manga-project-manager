@@ -2,14 +2,14 @@
 
 /**
  * @package WP Manga Project Manager
- * @version 0.2.87
+ * @version 0.2.90
  */
 /*
 	Plugin Name: WP Manga Project Manager
 	Plugin URI: http://dev.xengi.org/blog/
 	Description: WP Manga Project Manager allows administrators and editors to manage information regarding project and release information. This plugin allows the changes to be made throughout the database and avoids displaying inaccurate information to the users.
 	Author: TEAM SEPTiCORE
-	Version: 0.2.87
+	Version: 0.2.90
 	Author URI: http://dev.xengi.org/blog/
 */
 
@@ -24,7 +24,7 @@ include('includes/wp_options.php');
 include('includes/wp_shortcode.php');
 include('includes/wp_widget.php');
 
-$wpmanga_plugin = "0.2.87";
+$wpmanga_plugin = "0.2.90";
 
 /**
  * Activates the Manga Project Manager Plugin.
@@ -44,7 +44,7 @@ function wpmanga_activate() {
  */
 function get_sListCategory($int = NULL, $list = TRUE) {
 	global $wpdb;
-	
+
 	if ($list) {
 		return $wpdb->get_results( $wpdb->prepare("SELECT * FROM `{$wpdb->prefix}projects` WHERE `category` = '%d' ORDER BY `title` ASC", $int) );
 	} else {
@@ -59,7 +59,7 @@ function get_sListCategory($int = NULL, $list = TRUE) {
  */
 function get_sListCategories() {
 	global $wpdb;
-	
+
 	return $wpdb->get_results("SELECT * FROM `{$wpdb->prefix}projects_category` ORDER BY `index` ASC");
 }
 
@@ -69,7 +69,7 @@ function get_sListCategories() {
  */
 function get_sListProject() {
 	global $wpdb;
-	
+
 	$projects = $wpdb->get_results("SELECT * FROM `{$wpdb->prefix}projects` ORDER BY `title` ASC");
 	return $projects;
 }
@@ -81,12 +81,12 @@ function get_sListProject() {
  */
 function get_sListLatest($limit = 5, $all = FALSE) {
 	global $wpdb;
-	
+
 	if ($all)
 		$display = "WHERE `unixtime_mod` <= '" . time() . "'";
 	else
 		$display = '';
-	
+
 	if ($limit)
 		return $wpdb->get_results($wpdb->prepare("SELECT * FROM `{$wpdb->prefix}projects_releases` {$display} ORDER BY `unixtime_mod` DESC LIMIT 0, %d", $limit));
 	else
@@ -100,7 +100,7 @@ function get_sListLatest($limit = 5, $all = FALSE) {
  */
 function get_sTitleCategory($id = NULL) {
 	global $wpdb;
-	
+
 	$category = $wpdb->get_row($wpdb->prepare("SELECT `name` FROM `{$wpdb->prefix}projects_category` WHERE `id` = '%d'", $id));
 	return (string) $category->name;
 }
@@ -112,15 +112,15 @@ function get_sTitleCategory($id = NULL) {
  */
 function get_sTitleProject($id = NULL) {
 	global $wp, $wpdb;
-	
+
 	if (!is_int($id))
 		$pid = get_sProjectId($wp->query_vars["pid"]);
 	else
 		$pid = (int) $id;
-	
+
 	$project = $wpdb->get_row($wpdb->prepare("SELECT `title` FROM `{$wpdb->prefix}projects` WHERE `id` = '%d' ORDER BY `title` ASC", $pid));
 
-	return (string) $project->title; 
+	return (string) $project->title;
 }
 
 /**
@@ -130,13 +130,13 @@ function get_sTitleProject($id = NULL) {
  */
 function get_sProjectId($query) {
 	global $wpdb;
-	
+
 	if (isset($query->project_id)) return (int) $query->project_id;
 	if (isset($query->id)) return (int) $query->id;
 	if (is_int($query)) return (int) $query;
-	
+
 	$pid = $wpdb->get_row($wpdb->prepare("SELECT `id` FROM `{$wpdb->prefix}projects` WHERE `slug` = '%s'", $query));
-	
+
 	if ($pid)
 		return (int) $pid->id;
 	else
@@ -151,14 +151,14 @@ function get_sProjectId($query) {
  */
 function get_sProject($project, $count = true) {
 	global $wpdb;
-	
+
 	$id = get_sProjectId($project);
 	if ($count && !is_user_logged_in() ) { $wpdb->query($wpdb->prepare("UPDATE `{$wpdb->prefix}projects` SET `hit` = hit + 1 WHERE `id` = '%d'", $id)); }
-	
+
 	$project = $wpdb->get_row($wpdb->prepare("SELECT * FROM `{$wpdb->prefix}projects` WHERE `id` = '%d'", $id));
 	if ($project->description != NULL) $project->description = nl2br($project->description);
 	if ($project->information != NULL) $project->information = nl2br($project->information);
-	
+
 	return $project;
 }
 
@@ -169,7 +169,7 @@ function get_sProject($project, $count = true) {
  */
 function get_sProjectVolumes($project) {
 	global $wp, $wpdb;
-	
+
 	$id = get_sProjectId($project);
 	return $wpdb->get_results($wpdb->prepare("SELECT * FROM `{$wpdb->prefix}projects_volumes` WHERE `project_id` = '%d' ORDER BY `volume` ASC", $id));
 }
@@ -181,12 +181,12 @@ function get_sProjectVolumes($project) {
  */
 function get_sProjectReleasesByVolume($project, $volume, $all = FALSE) {
 	global $wp, $wpdb;
-	
+
 	if ($all)
 		$display = "AND `unixtime_mod` <= '" . time() . "'";
 	else
 		$display = '';
-	
+
 	$id = get_sProjectId($project);
 	return $wpdb->get_results($wpdb->prepare("SELECT * FROM `{$wpdb->prefix}projects_releases` WHERE `project_id` = '%d' AND `volume` = '%d' {$display} ORDER BY `volume` ASC, `chapter` ASC, `subchapter` ASC, `type` ASC", $id, $volume));
 }
@@ -198,12 +198,12 @@ function get_sProjectReleasesByVolume($project, $volume, $all = FALSE) {
  */
 function get_sProjectReleases($project, $all = FALSE) {
 	global $wp, $wpdb;
-	
+
 	if ($all)
 		$display = "AND `unixtime_mod` <= '" . time() . "'";
 	else
 		$display = '';
-	
+
 	$id = get_sProjectId($project);
 	return $wpdb->get_results($wpdb->prepare("SELECT * FROM `{$wpdb->prefix}projects_releases` WHERE `project_id` = '%d' {$display} ORDER BY `volume` ASC, `chapter` ASC, `subchapter` ASC, `type` ASC", $id));
 }
@@ -226,7 +226,7 @@ function get_sReleaseDownloads($release) {
 				$downloads->{$download} = $release->{$download};
 		}
 	}
-	
+
 	return $downloads;
 }
 
@@ -237,7 +237,7 @@ function get_sReleaseDownloads($release) {
  */
 function get_sRelease($id) {
 	global $wpdb;
-	
+
 	$release = $wpdb->get_row($wpdb->prepare("SELECT * FROM `{$wpdb->prefix}projects_releases` WHERE `id` = '%d'", $id));
 	return $release;
 }
@@ -249,7 +249,7 @@ function get_sRelease($id) {
  */
 function get_sLastRelease($id) {
 	global $wpdb;
-	
+
 	#$release = $wpdb->get_row($wpdb->prepare("SELECT * FROM `{$wpdb->prefix}projects_releases` WHERE `project_id` = '%d' ORDER BY `volume` DESC, `chapter` DESC, `subchapter` DESC LIMIT 1", $id));
 	$release = $wpdb->get_row($wpdb->prepare("SELECT * FROM `{$wpdb->prefix}projects_releases` WHERE `project_id` = '%d' ORDER BY `unixtime_mod` DESC, `unixtime` DESC LIMIT 1", $id));
 	return $release;
@@ -263,26 +263,26 @@ function get_sLastRelease($id) {
 function get_sFormatRelease($project, $release, $v = true, $c = true, $r = true) {
 	$custom_chp = get_sJSON($project->custom, 'chapter');
 	$custom_sub = get_sJSON($project->custom, 'subchapter');
-	
+
 	$output = '';
-	
+
 	switch ($release->type) {
 		case 5:
 			$output .= 'Volume ' . str_pad($release->volume, 2, '0', STR_PAD_LEFT);
 			break;
-			
+
 		case 10:
 			if ($v && $release->volume) $output .= 'Volume ' . str_pad($release->volume, 2, '0', STR_PAD_LEFT) . ' ';
 			$output .= 'Special';
 			if ($release->subchapter > 0) $output .= ' ' . $release->subchapter;
 			break;
-		
+
 		case 20:
 			if ($v && $release->volume) $output .= 'Volume ' . str_pad($release->volume, 2, '0', STR_PAD_LEFT) . ' ';
 			$output .= 'Oneshot';
 			if ($release->subchapter > 0) $output .= ' ' . $release->subchapter;
 			break;
-		
+
 		default:
 			if ($v && $release->volume) $output .= 'Volume ' . str_pad($release->volume, 2, '0', STR_PAD_LEFT) . ' ';
 			if ($c) {
@@ -290,7 +290,7 @@ function get_sFormatRelease($project, $release, $v = true, $c = true, $r = true)
 					$output .= str_replace('%num%', str_pad($release->chapter, 2, '0', STR_PAD_LEFT), $custom_chp);
 				else
 					$output .= 'Chapter ' . str_pad($release->chapter, 2, '0', STR_PAD_LEFT);
-				
+
 				if ($release->subchapter > 0) {
 					if ($custom_sub)
 						$output .= ' ' . str_replace('%num%', str_pad($release->subchapter, 2, '0', STR_PAD_LEFT), $custom_sub);
@@ -299,7 +299,7 @@ function get_sFormatRelease($project, $release, $v = true, $c = true, $r = true)
 				}
 			}
 	}
-	
+
 	if ($r && $release->revision > 1) $output .= ' v' . $release->revision;
 
 	return $output;
@@ -328,17 +328,19 @@ function get_sReaderLink($project, $release) {
 	switch (wpmanga_get('wpmanga_reader')) {
 		 // FoOlSlide
 		case 1:
-			$url = str_replace('/reader/comic/', '/reader/read/', $project->reader) . 'en'. '/' . $release->volume . '/' . $release->chapter . '/';
-			$url = str_replace('/reader/serie/', '/reader/read/', $url);
+			$url = str_replace('/reader/comic/', '/reader/read/', $project->reader) . $release->chapter_lang . '/' . $release->volume . '/' . $release->chapter . '/';
+			$url = str_replace('/reader/serie/', '/reader/read/', $url);	//FoOlSlide below 0.8.4 link style
+			$url = str_replace('/reader/series/', '/reader/read/', $url);	//FoOlSlide 0.8.4 link style
 			if ($release->subchapter) $url .= $release->subchapter . '/';
 			break;
-		
-		 // None: Return $reader
+
+		 // None: Return $reader or individual link for chapter release
 		default:
 			$url = $project->reader;
+			if ($release->chapter_link) $url = $release->chapter_link;
 			break;
 	}
-	
+
 	return $url;
 }
 
@@ -349,7 +351,7 @@ function get_sReaderLink($project, $release) {
  */
 function get_sPermalink($project = NULL) {
 	global $wp, $wpdb;
-	
+
 	if (!$project) {
 		$id = get_sProjectId($wp->query_vars["pid"]);
 		$project = $wpdb->get_row($wpdb->prepare("SELECT `id`, `slug` FROM `{$wpdb->prefix}projects` WHERE `id` = '%d' ORDER BY `title` ASC", $id));
@@ -358,7 +360,7 @@ function get_sPermalink($project = NULL) {
 		$id = (int) $project;
 		$project = $wpdb->get_row($wpdb->prepare("SELECT `id`, `slug` FROM `{$wpdb->prefix}projects` WHERE `id` = '%d' ORDER BY `title` ASC", $id));
 	}
-	
+
 	if ($project->slug != NULL)
 		return (string) get_bloginfo('siteurl') . '/projects/' . $project->slug . '/';
 	else
