@@ -135,6 +135,7 @@ function wpmanga_settings() {
 			$_POST = array_map('trim', $_POST);
 
 			// Check Boxes Suck (Search for Alternative Method)
+			if (!$_POST['wpmanga_releasebar_style']) $_POST['wpmanga_releasebar_style'] = 0;
 			if (!$_POST['wpmanga_page_details_title']) $_POST['wpmanga_page_details_title'] = 0;
 			if (!$_POST['wpmanga_page_details_header']) $_POST['wpmanga_page_details_header'] = 0;
 			if (!$_POST['wpmanga_foolreader']) $_POST['wpmanga_foolreader'] = 0;
@@ -219,7 +220,7 @@ function wpmanga_settings() {
 									<td valign="top" width="250px"><label>Online Reader Link Generator</label></td>
 									<td>
 										<input name="wpmanga_reader" id="reader_foolreader" type="radio" value="1"<?php if (wpmanga_get('wpmanga_reader', 1) == 1) echo ' checked="checked"'; ?>> <label for="reader_foolreader">FoOlSlide</label> &nbsp;
-										<input name="wpmanga_reader" id="reader_none" type="radio" value="0"<?php if (!wpmanga_get('wpmanga_reader', 1) == 1) echo ' checked="checked"'; ?>> <label for="reader_none">None</label>
+										<input name="wpmanga_reader" id="reader_none" type="radio" value="0"<?php if (!wpmanga_get('wpmanga_reader', 1) == 0) echo ' checked="checked"'; ?>> <label for="reader_none">None</label>
 									</td>
 								</tr>
 

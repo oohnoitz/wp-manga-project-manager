@@ -8,7 +8,6 @@
  */
 function wpmanga_dataRelease() {
 	global $wpdb;
-require_once('lang_unit.php');
 
 	// Action Variable
 	if (isset($_GET['action']))
@@ -48,7 +47,7 @@ require_once('lang_unit.php');
 					if ($_POST['revision'] > $edit->revision) $_POST['unixtime_mod'] = time();
 				}
 
-				$data = array('project_id' => $_POST['project_id'], 'unixtime' => $_POST['unixtime'], 'unixtime_mod' => $_POST['unixtime_mod'], 'volume' => $_POST['volume'], 'chapter' => $_POST['chapter'], 'subchapter' => $_POST['subchapter'], 'revision' => $_POST['revision'], 'type' => $_POST['type'], 'title' => $_POST['title'], 'download_megaupload' => $_POST['download_megaupload'], 'download_mediafire' => $_POST['download_mediafire'], 'download_depositfiles' => $_POST['download_depositfiles'], 'download_fileserve' => $_POST['download_fileserve'], 'download_filesonic' => $_POST['download_filesonic'], 'download_pdf' => $_POST['download_pdf'], 'download_irc' => $_POST['download_irc'], 'chapter_link' => $_POST['chapter_link'], 'chapter_lang' => $_POST['chapter_lang']);
+				$data = array('project_id' => $_POST['project_id'], 'unixtime' => $_POST['unixtime'], 'unixtime_mod' => $_POST['unixtime_mod'], 'volume' => $_POST['volume'], 'chapter' => $_POST['chapter'], 'subchapter' => $_POST['subchapter'], 'revision' => $_POST['revision'], 'type' => $_POST['type'], 'title' => $_POST['title'], 'download_megaupload' => $_POST['download_megaupload'], 'download_mediafire' => $_POST['download_mediafire'], 'download_depositfiles' => $_POST['download_depositfiles'], 'download_fileserve' => $_POST['download_fileserve'], 'download_filesonic' => $_POST['download_filesonic'], 'download_pdf' => $_POST['download_pdf'], 'download_irc' => $_POST['download_irc'], 'link_reader' => $_POST['link_reader'], 'language' => $_POST['language']);
 
 				switch ($action) {
 					case 'edit':
@@ -190,35 +189,34 @@ require_once('lang_unit.php');
 							<label for="download_pdf"><?php if (!wpmanga_get('wpmanga_disable_pdf', 0)) echo '<img src="' . plugin_sURL(). 'images/download-icon-pdf-24.png" width="24px" style="vertical-align: middle; padding-bottom: 2px"><br>'; ?></label>
 						</td>
 					</tr>
-<?php // add by busaway ?>
-<?php if (!wpmanga_get('wpmanga_reader',1) == 1) { ?>
+
+					<?php if (!wpmanga_get('wpmanga_reader',1) == 1) { ?>
 					<tr class="form-field">
-						<th scope="row"><label for="chapter_link">Chapter Links</label></th>
+						<th scope="row"><label for="link_reader">Chapter Links</label></th>
 						<td>
-							<input name="chapter_link" id="chapter_link" type="url" placeholder="Enter chapter link here." style="width:90%;" value="<?php if (isset($release)) echo $release->chapter_link; ?>"<?php if ($action == 'delete') echo ' readonly="readonly"'; ?>>
-							<label for="chapter_link"><img src=" <?php echo plugin_sURL(); ?>images/download-icon-onlinereader-24.png" width="24px" style="vertical-align: middle; padding-bottom: 2px"><br></label>
+							<input name="link_reader" id="link_reader" type="url" placeholder="Enter chapter link here." style="width:90%;" value="<?php if (isset($release)) echo $release->link_reader; ?>"<?php if ($action == 'delete') echo ' readonly="readonly"'; ?>>
+							<label for="link_reader"><img src=" <?php echo plugin_sURL(); ?>images/download-icon-onlinereader-24.png" width="24px" style="vertical-align: middle; padding-bottom: 2px"><br></label>
 						</td>
 					</tr>
-<?php } ?>
+					<?php } ?>
 					<tr class="form-field">
-						<th scope="row"><label for="chapter_lang">Language</label></th>
+						<th scope="row"><label for="language">Language</label></th>
 						<td>
-							<select name="chapter_lang" id="chapter_lang" style="width:460px" <?php if ($action == 'delete') echo ' readonly="readonly"'; ?>>
+							<select name="language" id="language" style="width:460px" <?php if ($action == 'delete') echo ' readonly="readonly"'; ?>>
 								<?php
-//								   print_r($lang_list);
-									foreach ($lang_list as $langlist => $value) {
-										if (preg_match("/(edit|delete)/i", $action)) {
-											if ($release->chapter_lang == $langlist)
-												echo "<option value='{$langlist}' selected='selected'>{$value}</option>";
-											else
-												echo "<option value='{$langlist}'>{$value}</option>";
-										} else {
-											if ('en' == $langlist)
-												echo "<option value='{$langlist}' selected='selected'>{$value}</option>";
-											else
-												echo "<option value='{$langlist}'>{$value}</option>";
-										}
+								foreach (wpmanga_listLanguages() as $language => $description) {
+									if (preg_match("/(edit|delete)/i", $action)) {
+										if ($release->language == $language)
+											echo "<option value='{$language}' selected='selected'>{$description}</option>";
+										else
+											echo "<option value='{$language}'>{$description}</option>";
+									} else {
+										if ('en' == $language)
+											echo "<option value='{$language}' selected='selected'>{$description}</option>";
+										else
+											echo "<option value='{$language}'>{$description}</option>";
 									}
+								}
 								?>
 							</select>
 						</td>

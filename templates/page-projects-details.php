@@ -97,7 +97,7 @@
 											
 											if ($value) {
 												if ($download == 'IRC')
-													echo "&nbsp; <span rel='#irc_overlay' title='{$value}'><a>{$download}</a></span>";
+													echo "&nbsp; <span rel='#download-overlay' title='{$value}'><a>{$download}</a></span>";
 												else
 													echo "&nbsp; <a href='{$value}' target='_blank'>{$download}</a>";
 											}
@@ -136,7 +136,7 @@
 										
 										if ($value) {
 											if ($download == 'IRC')
-												echo "&nbsp; <span rel='#irc_overlay' title='{$value}'><a>{$download}</a></span>";
+												echo "&nbsp; <span rel='#download-overlay' title='{$value}'><a>{$download}</a></span>";
 											else
 												echo "&nbsp; <a href='{$value}' target='_blank'>{$download}</a>";
 										}

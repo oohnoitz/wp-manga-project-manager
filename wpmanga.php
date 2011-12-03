@@ -2,14 +2,14 @@
 
 /**
  * @package WP Manga Project Manager
- * @version 0.2.90
+ * @version 0.2.91
  */
 /*
 	Plugin Name: WP Manga Project Manager
 	Plugin URI: http://dev.xengi.org/blog/
 	Description: WP Manga Project Manager allows administrators and editors to manage information regarding project and release information. This plugin allows the changes to be made throughout the database and avoids displaying inaccurate information to the users.
 	Author: TEAM SEPTiCORE
-	Version: 0.2.90
+	Version: 0.2.91
 	Author URI: http://dev.xengi.org/blog/
 */
 
@@ -20,11 +20,12 @@ include('admin/admin_menu.php');
 include('includes/database_migration.php');
 include('includes/wp_dashboard.php');
 include('includes/wp_functions.php');
+include('includes/wp_languages_unit.php');
 include('includes/wp_options.php');
 include('includes/wp_shortcode.php');
 include('includes/wp_widget.php');
 
-$wpmanga_plugin = "0.2.90";
+$wpmanga_plugin = "0.2.91";
 
 /**
  * Activates the Manga Project Manager Plugin.
@@ -328,7 +329,7 @@ function get_sReaderLink($project, $release) {
 	switch (wpmanga_get('wpmanga_reader')) {
 		 // FoOlSlide
 		case 1:
-			$url = str_replace('/reader/comic/', '/reader/read/', $project->reader) . $release->chapter_lang . '/' . $release->volume . '/' . $release->chapter . '/';
+			$url = str_replace('/reader/comic/', '/reader/read/', $project->reader) . $release->language . '/' . $release->volume . '/' . $release->chapter . '/';
 			$url = str_replace('/reader/serie/', '/reader/read/', $url);	//FoOlSlide below 0.8.4 link style
 			$url = str_replace('/reader/series/', '/reader/read/', $url);	//FoOlSlide 0.8.4 link style
 			if ($release->subchapter) $url .= $release->subchapter . '/';
@@ -337,7 +338,7 @@ function get_sReaderLink($project, $release) {
 		 // None: Return $reader or individual link for chapter release
 		default:
 			$url = $project->reader;
-			if ($release->chapter_link) $url = $release->chapter_link;
+			if ($release->link_reader) $url = $release->link_reader;
 			break;
 	}
 
