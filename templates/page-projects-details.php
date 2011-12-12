@@ -24,8 +24,15 @@
 		if (wpmanga_get('wpmanga_page_details_header', 0))	echo "<h2>{$project->title}</h2>";
 ?>
 
+		<?php if ($project->mature) : ?>
+		<div id="project-warning">This project contains mature content and is rated R-18.</div>
+		<?php endif; ?>
+
 		<div id="project-container">
-			<img title="<?php echo $project->title; if ($project->title_alt) echo "&nbsp; &#12302; {$project->title_alt} &#12303;"; ?>" src="<?php echo $project->image; ?>">
+			<div class="item">
+				<img title="<?php echo $project->title; if ($project->title_alt) echo "&nbsp; &#12302; {$project->title_alt} &#12303;"; ?>" src="<?php echo $project->image; ?>">
+				<?php if ($project->mature) : ?><div class="mature">R-18</div><?php endif; ?>
+			</div>
 			
 			<div id="project-details">
 				<p>

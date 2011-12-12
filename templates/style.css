@@ -63,6 +63,7 @@ ul.latest-release-list li {
 #projects-wrapper .item {
 	float: left;
 	margin: 0 0 5px 5px;
+	position: relative;
 }
 #projects-wrapper .item img {
 	opacity: 0.7;
@@ -89,7 +90,19 @@ ul.latest-release-list li {
 }
 
 /* Project Details */
+#project-warning {
+	width: 100%;
+	text-align: center;
+	border: 1px solid #CED2D7;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
 #project-container { padding-top: 5px; }
+#project-container .item {
+	float: left;
+	position: relative;
+}
 #project-container img {
 	opacity: 0.7;
 	float: left;
@@ -141,6 +154,20 @@ ul.latest-release-list li {
 	font-style: italic;
 	font-weight: bold;
 	background-color: #AAA;
+}
+
+.mature {
+	position: absolute;
+	bottom: 0px;
+	right: 15px;
+	padding: 5px;
+	color: red;
+	font-weight: bold;
+	font-size: 35px;
+	-webkit-text-stroke: 1px #FFFFFF;
+	-webkit-text-fill-color: #cc0000;
+	background: -moz-linear-gradient(left,  #fff,  #000);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#000000');
 }
 
 /* Overlay */

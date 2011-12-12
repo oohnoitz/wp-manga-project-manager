@@ -24,6 +24,8 @@ function wpmanga_dataProject() {
 			$_POST = array_map('trim', $_POST);
 			$_POST = array_map('stripslashes', $_POST);
 			
+			if (!$_POST['mature']) $_POST['mature'] = 0;
+			
 			if ($_POST['title']) {
 				if ($_POST['image']) {
 					$thumbnail = new WP_Http;
@@ -32,7 +34,7 @@ function wpmanga_dataProject() {
 				}
 				
 				$custom_settings = json_encode(array('chapter' => $_POST['custom_chapter'], 'subchapter' => $_POST['custom_subchapter']));
-				$data = array('category' => $_POST['category'], 'slug' => get_sSanitizedSlug($_POST['title']), 'title' => $_POST['title'], 'title_alt' => $_POST['title_alt'], 'description' => $_POST['description'], 'author' => $_POST['author'], 'genre' => $_POST['genre'], 'status' => $_POST['status'], 'image' => $_POST['image'], 'reader' => $_POST['reader'], 'url' => $_POST['url'], 'custom' => $custom_settings);
+				$data = array('category' => $_POST['category'], 'slug' => get_sSanitizedSlug($_POST['title']), 'title' => $_POST['title'], 'title_alt' => $_POST['title_alt'], 'description' => $_POST['description'], 'author' => $_POST['author'], 'genre' => $_POST['genre'], 'status' => $_POST['status'], 'image' => $_POST['image'], 'reader' => $_POST['reader'], 'url' => $_POST['url'], 'mature' => $_POST['mature'], 'custom' => $custom_settings);
 				
 				switch ($action) {
 					case 'edit':
@@ -160,6 +162,11 @@ function wpmanga_dataProject() {
 				<tr class="form-field">
 					<th scope="row"><label for="url">Reference Link</label></th>
 					<td><input name="url" id="url" type="url" placeholder="http://mangaupdates.com/series.html?id=..." value="<?php if (isset($project)) echo $project->url; ?>"<?php if ($action == 'delete') echo ' readonly="readonly"'; ?>></td>
+				</tr>
+				
+				<tr class="form">
+					<th scope="row"><label for="custom_subchapter">Mature Content</label></th>
+					<td><input name="mature" id="mature" type="checkbox" value="1"<?php if ($project->mature) echo ' checked="checked"'; ?>> Yes</td>
 				</tr>
 				
 				<tr class="form-field">

@@ -67,7 +67,9 @@
 			echo '<div id="projects-wrapper">';
 			
 			foreach ($projects as $project) {
-				echo "<div class='item'><a href='" . get_sPermalink($project) . "'><img src='" . get_sThumbnail($thumbnail_width . "x" . $thumbnail_height, $project->image) . "' width='{$thumbnail_width}' height='{$thumbnail_height}' id='{$project->id}' title='{$project->name}' alt='{$project->name}'></a></div>";
+				echo "<div class='item'><a href='" . get_sPermalink($project) . "'><img src='" . get_sThumbnail($thumbnail_width . "x" . $thumbnail_height, $project->image) . "' width='{$thumbnail_width}' height='{$thumbnail_height}' id='{$project->id}' title='{$project->name}' alt='{$project->name}'>";
+				if ($project->mature) echo "<div class='mature'>R-18</div>";
+				echo "</a></div>";
 			}
 			
 			echo '</div><br class="wpmanga-clear"><br>';
